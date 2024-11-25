@@ -156,8 +156,8 @@ cython_debug/
 
 
 #Ignore slurm .out or .err files
-.out
-.err
+**/*.out
+**/*.err
 
 #Ignore my _backup folder called _bin
 /_bin
