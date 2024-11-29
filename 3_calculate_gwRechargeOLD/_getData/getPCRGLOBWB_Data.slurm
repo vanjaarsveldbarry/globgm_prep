@@ -1,5 +1,0 @@
-#!/bin/bash
-
-saveFolder="/projects/0/einf4705/gwRecharge_correction/data"
-cp /projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise/develop/global_30sec/landSurface/topography/merit_dem_processed/version_2021-02-XX/maps_covered_with_zero/dem_average_topography_parameters_30sec_february_2021_global_covered_with_zero.nc $saveFolder/dem_average_topography_parameters_30sec_february_2021_global_covered_with_zero.nc
-cp /projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise/develop/global_30sec/groundwater/properties/version_202102XX/recession_coefficient_30sec.nc $saveFolder

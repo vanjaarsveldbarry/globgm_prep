@@ -9,15 +9,16 @@ mamba activate globgm
 
 saveDirectory=$1  
 sim=$2
+iRodsPassword=$3
 
-predRechargeFile=/scratch/depfg/7006713/globgm_input/_tempGLOBGM/predicted_recharge.nc
+cd "$(dirname "$0")"
+
+# python -u _download_recharge.py $saveDirectory $sim $iRodsPassword
 
 scenarios=(
         "historical_natural" 
-        # "historical" 
     )
 for scen in "${scenarios[@]}"; do
     subSaveDir=$saveDirectory/$sim/$scen
-    echo $subSaveDir $sim $predRechargeFile
-    python -u /eejit/home/7006713/projects/globgm_prep/3_calculate_gwRecharge/calculate_cf.py $subSaveDir $sim $predRechargeFile
+    python -u 3_gwRech_correction.py $subSaveDir $sim
 done
