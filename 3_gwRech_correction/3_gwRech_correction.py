@@ -36,9 +36,7 @@ mx, my = np.meshgrid(lon_grid, lat_grid, indexing="ij")
 ds = ds.bivariate(coords=dict(longitude=mx.ravel(), latitude=my.ravel()), num_threads=0)
 ds = ds.reshape(mx.shape).T
 ds = xr.DataArray(ds, coords=[lat_grid, lon_grid], dims=['lat', 'lon']).sortby('lat')
-gw_corrected_field_min = gw_corrected_field.min().values
-cf = (gw_corrected_field + gw_corrected_field_min) / (ds + gw_corrected_field_min)
+cf = (gw_corrected_field + 1e-20) / (ds + 1e-20)
 cf = cf.rename('correction_factor').to_dataset()
 cf = cf.sortby('lat', ascending=False)
-cf['gw_corrected_field_min'] = xr.DataArray(gw_corrected_field_min)
 cf.to_zarr(input_folder / 'gwRecharge_correction_factor.zarr', mode='w')

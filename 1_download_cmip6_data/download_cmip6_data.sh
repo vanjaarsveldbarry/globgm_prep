@@ -1,3 +1,5 @@
+
+
 #!/bin/bash
 saveDirectory=$1
 simulation=$2
@@ -9,12 +11,11 @@ variables=(
     "storUppTotal_global_monthly-average"
     "totalGroundwaterAbstraction_global_monthly-total"
     "totalRunoff_global_monthly-total"
+    "precipitation_global_monthly-total"
 )
 
 if [ "$simulation" == "gswp3-w5e5" ]; then
-    scenarios=(
-        "historical" 
-    )
+    scenarios=("historical")
 else
     scenarios=(
         "historical" 

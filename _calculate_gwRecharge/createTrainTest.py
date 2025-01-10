@@ -7,22 +7,20 @@ import zarr
 import seaborn as sns
 
 def pre_process_train(df):
-    columns_to_drop = ['lat', 'lon']  # Replace with actual column names
+    columns_to_drop = ['lat', 'lon', 'groundwater_recharge']  # Replace with actual column names
     df.drop(columns=columns_to_drop, inplace=True)
-    df['groundwater_recharge'] = df['groundwater_recharge'].clip(lower=0)
-    # df= df.apply(np.sqrt)
-    df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df.dropna(inplace=True)
+    df['elevation'] = df['elevation'].clip(lower=0)
+    df= df.apply(np.sqrt)
     y = df['obs_recharge'].to_numpy()
     X = df.drop(columns=['obs_recharge'])
     X = X.to_numpy()
     return y, X
 
 def pre_process_predict(df):
-    df['groundwater_recharge'] = df['groundwater_recharge'].clip(lower=0)
-    # df.loc[:, df.columns.difference(['lat', 'lon'])] = df.loc[:, df.columns.difference(['lat', 'lon'])].apply(np.sqrt)
-    df.replace([np.inf, -np.inf], np.nan, inplace=True)
-    df.dropna(inplace=True)
+    columns_to_drop = ['groundwater_recharge']  # Replace with actual column names
+    df.drop(columns=columns_to_drop, inplace=True)
+    df['elevation'] = df['elevation'].clip(lower=0)
+    df.loc[:, df.columns.difference(['lat', 'lon'])] = df.loc[:, df.columns.difference(['lat', 'lon'])].apply(np.sqrt)
     lat_lon = df[['lat', 'lon']]
     columns_to_drop = ['lat', 'lon']  # Replace with actual column names
     df.drop(columns=columns_to_drop, inplace=True)
@@ -39,13 +37,13 @@ df = pd.read_parquet(dataFolder / 'data_train.parquet')
 y, X = pre_process_train(df)
 zarr.save(dataFolder / 'y_train.zarr', y)
 zarr.save(dataFolder / 'X_train.zarr', X)
-import matplotlib.pyplot as plt
-y = pd.DataFrame(y, columns=['groundwater_recharge'])
-X = pd.DataFrame(X)
-# Create a DataFrame for pairplot
-df_pairplot = pd.concat([y, X], axis=1)
-sns.pairplot(df_pairplot, y_vars=y.columns, x_vars=X.columns)
-plt.savefig('/scratch/depfg/7006713/gwRecharge_corrected/pairplot_y_vs_X.png')
+# import matplotlib.pyplot as plt
+# y = pd.DataFrame(y, columns=['groundwater_recharge'])
+# X = pd.DataFrame(X)
+# # Create a DataFrame for pairplot
+# df_pairplot = pd.concat([y, X], axis=1)
+# sns.pairplot(df_pairplot, y_vars=y.columns, x_vars=X.columns)
+# plt.savefig('/scratch/depfg/7006713/gwRecharge_corrected/pairplot_y_vs_X.png')
 
 df = pd.read_parquet(dataFolder / 'data_predict.parquet')
 X, lat_lon = pre_process_predict(df)

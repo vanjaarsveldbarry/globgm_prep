@@ -59,15 +59,15 @@ password = sys.argv[3]
 # # Create a session
 env_config = '/eejit/home/7006713/.irods/irods_environmentDAG.json'
 
-projectDirectory='/nluu14p/home/deposit-pilot/globgm/preprocess/_natural_runs/gswp3-w5e5/historical_natural/netcdf/'
-var='pcrglobwb_cmip6-isimip3-gswp3-w5e5_image-aqueduct_historical-natural_actualET_global_monthly-total_1960_2019_basetier1.nc'
-
-variables = ['gwRecharge_global_monthly-total',
-                'storLowTotal_global_monthly-average',
-                'storUppTotal_global_monthly-average',
-                'totalGroundwaterAbstraction_global_monthly-total',
-                'totalRunoff_global_monthly-total'
-                ]
+projectDirectory=f'/nluu14p/home/deposit-pilot/globgm/preprocess/_natural_runs/{sim}/historical_natural/netcdf/'
+variables = [
+            'gwRecharge_global_monthly-total',
+            'storLowTotal_global_monthly-average',
+            'storUppTotal_global_monthly-average',
+            'totalGroundwaterAbstraction_global_monthly-total',
+            'totalRunoff_global_monthly-total', 
+            'precipitation_global_monthly-total'
+            ]
 
 for var in variables:
     session = setup_iRodsSession(env_config, password)

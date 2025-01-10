@@ -22,7 +22,7 @@ outputFolder.mkdir(parents=True, exist_ok=True)
 
 y = zarr.load(dataFolder / 'y_train.zarr')
 X = zarr.load(dataFolder / 'X_train.zarr')
-gam = LinearGAM(s(0) + s(1) + s(2) + s(3)  + s(4)  + s(5) + s(6) + s(7) + s(8) + s(9) , fit_intercept=True).gridsearch(X, y)
+gam = LinearGAM(s(0) + s(1) + s(2) + s(3)  + s(4)  + s(5) + s(6) + s(7) + s(8), fit_intercept=False).gridsearch(X, y)
 gam.summary()
 
 predict_df = pd.read_parquet(dataFolder / 'lat_lon_predict.parquet')
@@ -36,6 +36,7 @@ def process_batch(start, end):
     predict_batch = predict_df.iloc[start:end]
     predict_batch = predict_batch.copy()
     predict_batch['predicted_recharge'] = np.square(gam.predict(X_pred[start:end]))
+    print(predict_batch['predicted_recharge'].min())
     predict_batch = xr.DataArray(predict_batch.groupby(['lat', 'lon'])['predicted_recharge'].first().unstack()).rename('predicted_recharge')
     predict_batch.to_zarr(tempFolder / f'predicted_recharge_{end}.zarr', mode='w')
 
@@ -71,5 +72,5 @@ grid_lat = xr.open_zarr(dataFolder / 'input_final.zarr').lat.values
 grid_lon = xr.open_zarr(dataFolder / 'input_final.zarr').lon.values
 ds_final = ds_final.reindex(lat=grid_lat, lon=grid_lon, method='nearest')
 print(ds_final)
-ds_final.to_netcdf(outputFolder / 'predicted_recharge.nc', mode='w')
+ds_final.to_netcdf(outputFolder / 'predicted_recharge_pre_correction.nc', mode='w')
 print('Done with merging')

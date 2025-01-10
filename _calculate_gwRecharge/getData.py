@@ -64,7 +64,7 @@ print('Elevation data loaded.')
 
 url='https://geo.public.data.uu.nl/vault-pcrglobwb-cmip6/research-pcrglobwb-cmip6%5B1690540205%5D/original/hypflowsci6_v1.0/output/gswp3-w5e5/historical-reference/pcrglobwb_cmip6-isimip3-gswp3-w5e5_image-aqueduct_historical-reference_gwRecharge_global_monthly-total_1960_2019_basetier1.nc'
 rechFile=tempFolder / 'temp_recharge.nc'
-# download_file_wget(url, rechFile)
+download_file_wget(url, rechFile)
 recharge = xr.open_dataset(rechFile)['groundwater_recharge']
 recharge = recharge.where(recharge >= 0, 0)
 recharge = recharge.resample(time='YE').sum()
@@ -128,7 +128,7 @@ subprocess.run(['gdal_translate', '-of', 'netCDF', str(petFile), str(petncFile)]
 subprocess.run(['cdo', 'invertlat', str(petncFile), str(invertedPetncFile)], check=True)
 pet_ds = xr.open_dataset(invertedPetncFile)[['Band1']].sel(lat=slice(latMax, latMin), lon=slice(lonMin, lonMax)).compute()
 pet_ds = pet_ds.reindex(lat=_grid_lat, lon=_grid_lon, method='nearest')
-pet_ds = pet_ds *0.01
+pet_ds = (pet_ds * 0.001) * 12
 pet_ds = pet_ds.rename({'Band1': 'pet'})
 pet_ds = pet_ds.sortby('lat')
 pet_ds = pet_ds.interpolate_na(dim="lat", method="nearest", fill_value="extrapolate")
@@ -148,7 +148,7 @@ subprocess.run(['gdal_translate', '-of', 'netCDF', str(tpFile), str(tpncFile)], 
 subprocess.run(['cdo', 'invertlat', str(tpncFile), str(invertedTpncFile)], check=True)
 tp_ds = xr.open_dataset(invertedTpncFile)[['Band1']].sel(lat=slice(latMax, latMin), lon=slice(lonMin, lonMax)).compute()
 tp_ds = tp_ds.reindex(lat=_grid_lat, lon=_grid_lon, method='nearest')
-tp_ds = tp_ds *0.01
+tp_ds = (tp_ds *0.001)
 tp_ds = tp_ds.rename({'Band1': 'tp'})
 tp_ds.attrs = {}
 tp_ds = tp_ds.where(mask==1, np.nan)

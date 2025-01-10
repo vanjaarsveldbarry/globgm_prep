@@ -50,7 +50,7 @@ def setup_iRodsSession(env_config, password):
     else:
         return session
 
-saveDirectory = Path(f"{sys.argv[1]}/{sys.argv[2]}/historical_natural/")
+saveDirectory = Path(f"{sys.argv[1]}/{sys.argv[2]}/historical/")
 password = sys.argv[3]
 
 env_config = '/eejit/home/7006713/.irods/irods_environmentDAG.json'

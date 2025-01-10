@@ -9,25 +9,30 @@ mamba activate globgm
 
 cd ./_calculate_gwRecharge
 
-Get data from various online/local sources
-python -u ./getData.py
-wait 
-echo "Done with getData.py"
+# #Get data from various online/local sources
+# python -u ./getData.py
+# wait 
+# echo "Done with getData.py"
 
-python ./preprocessData.py
-wait 
-echo "Done with preprocessData.py"
+# python ./preprocessData.py
+# wait 
+# echo "Done with preprocessData.py"
 
-python ./createTrainTest.py
-wait 
-echo "Done with createTrainTest.py"
+# python ./createTrainTest.py
+# wait 
+# echo "Done with createTrainTest.py"
 
-python -u ./finalModel.py
-wait 
-echo "Done with finalModel.py"
+# python -u ./finalModel.py
+# wait 
+# echo "Done with finalModel.py"
 
+# Correct the final product so that it 
+python ./correct_final.py
 wait
-rm -r /scratch/depfg/7006713/gwRecharge_corrected/_tempPredict
-rm -r /scratch/depfg/7006713/gwRecharge_corrected/_temp
+echo "Done with correct_finalProduct.py"
+
+# wait
+# rm -r /scratch/depfg/7006713/gwRecharge_corrected/_tempPredict
+# rm -r /scratch/depfg/7006713/gwRecharge_corrected/_temp
 
 
