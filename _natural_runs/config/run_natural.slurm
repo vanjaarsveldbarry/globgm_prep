@@ -16,8 +16,13 @@ mkdir -p $tempSaveDir/netcdf
 INI_FILE="/eejit/home/7006713/projects/globgm_prep/_natural_runs/config/setup_05min_historical_version_2021-09-16_naturalized_no-water_no-reservoirs_two-natural-landcovers.ini"
 
 # # # # starting and end dates
-STARTING_DATE="1960-01-01"
-END_DATE="2019-12-31"
+if [ "$simulation" = "gswp3-w5e5" ]; then
+    STARTING_DATE="1960-01-01"
+    END_DATE="2019-12-31"
+else
+    STARTING_DATE="1960-01-01"
+    END_DATE="2014-12-31"
+fi
 
 # # # # location/folder, where you will store output files of your 
 MAIN_OUTPUT_DIR="${tempDir}/${simulation}"
