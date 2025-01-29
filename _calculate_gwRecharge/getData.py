@@ -29,7 +29,7 @@ dataFolder.mkdir(parents=True, exist_ok=True)
 #Land use cover               :                                  : 
 #Elevation                    : pcrglobwb                        : DONE
 #Reccession Coeef             : pcrglobwb                        : DONE
-#30sec Recharge from chapter 1: pcrglobwb                        : DONE
+# 5 arcmin recharge : pcrglobwb                        : DONE
 
 def download_file_wget(url, outFile):
     try:
