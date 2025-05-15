@@ -26,10 +26,9 @@ dataFolder.mkdir(parents=True, exist_ok=True)
 #Sand fraction                : soil250m                         : DONE 
 #Silt fraction                : soil250m                         : DONE 
 #Bulk density                 : soil250m                         : DONE
-#Land use cover               :                                  : 
 #Elevation                    : pcrglobwb                        : DONE
 #Reccession Coeef             : pcrglobwb                        : DONE
-# 5 arcmin recharge : pcrglobwb                        : DONE
+# 5 arcmin recharge           : pcrglobwb                        : DONE
 
 def download_file_wget(url, outFile):
     try:
